@@ -1,0 +1,176 @@
+{
+	"info": {
+		"_postman_id": "e90d5d65-4128-4afc-9154-a9fcc7312fa4",
+		"name": "api graphql pruebas",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "11970562"
+	},
+	"item": [
+		{
+			"name": "Queries",
+			"item": [
+				{
+					"name": "lista de usuarios - query",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query usuarios{\n  allUsers{\n    pageInfo{\n      hasNextPage,\n      hasPreviousPage\n    },\n    edges{\n      node{\n        id,\n        username,\n        email\n      },\n      cursor\n    }\n  }\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5080/graphql",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5080",
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "lista de usuarios con skip e include - query",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query usuarios{\n  allUsers{\n    pageInfo{\n      hasNextPage,\n      hasPreviousPage\n    },\n    edges{\n      node{\n        id,\n        username,\n        email\n      },\n      cursor\n    }\n  }\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5080/graphql",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5080",
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "usuarios y post - query",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query usuarios_y_posts{\n  allUsers{\n    pageInfo{\n      hasNextPage,\n      hasPreviousPage\n    },\n    edges{\n      node{\n        id,\n        username,\n        email,\n        posts{\n          edges{\n            node{\n              id,\n              title\n            }\n          }\n        }\n      },\n      cursor\n    }\n  }\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5080/graphql",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5080",
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get node - uso de variables - query",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query un_usuario($id: ID!){\n  node(id: $id){\n    id\n  }\n}",
+								"variables": "{\n    \"id\": \"VXNlclNjaGVtYTox\"\n}"
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5080/graphql",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5080",
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get node - uso de variables, fragments y alias - query Copy",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query un_usuario($id1: ID!, $id2: ID!){\n  uno: node(id: $id1){\n    ... datos_usuario\n  },\n  dos: node(id: $id2){\n    ... datos_usuario\n  }\n}\n\nfragment datos_usuario on Node {\n    id\n}",
+								"variables": "{\n    \"id1\": \"VXNlclNjaGVtYTox\",\n    \"id2\": \"VXNlclNjaGVtYTox\"\n}"
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5080/graphql",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5080",
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Mutations",
+			"item": [
+				{
+					"name": "crear usuario - mutation",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation crearUsuario{\n  mutateUser(\n    email: \"marcelo@gmail.com\",\n    username: \"Marcelo\"\n  ){\n    user{\n      id,\n      username,\n      email,\n      posts{\n        pageInfo{\n          hasNextPage,\n          hasPreviousPage\n        },\n        edges{\n          node{\n            id,\n            title,\n            content\n          },\n          cursor\n        }\n      }\n    }\n  }\n}\n",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5080/graphql",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5080",
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
